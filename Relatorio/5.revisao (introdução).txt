@@ -1,10 +1,16 @@
-﻿A evolução tecnológica na indústria automotiva foi  promovendo a inserção de mecanismos e dispositivos eletrônicos capazes de proporciornar
-maior comodidade e segurança ao usuário. Dentre os dispositivos que trouxeram mudanças significativas a este setor, pode-se destacar a central multimídia.
+[...]
+
+
+A constante evolução tecnológica na indústria automobilística vem  promovendo a inserção de mecanismos e dispositivos eletrônicos capazes de proporciornar maior comodidade e segurança ao usuário. Dentre os dispositivos que trouxeram mudanças significativas a este setor, pode-se destacar a central multimídia.
 O termo multimídia, como o próprio nome diz, se refere à capacidade de comportar diversas funcionalidades em termos de meios de 
 comunicação. Portanto, a central trata-se de um sistema capaz de unir e gerenciar o funcionamento destes recursos. 
-Dentre as principais funcionalidades observadas em aparelhos como este, estão: conexão bluetooth, rádio, reprodutor de DVD, TV Digital, 
+Dentre as principais funcionalidades observadas em aparelhos como este, estão: conexão bluetooth, rádio, leitor de dispositivos USB, TV Digital, 
 GPS, controle de câmera traseira, sensor de estacionamento, interação com dispositivos celulares, entre outras.
 
 
 [...]
+
+
+A proposta do projeto é a implementação de uma central multimídia, que seja capaz de realizar algumas das principais funcionalidades apresentadas, tais como a reprodução de arquivos mediante inserção de dispositivo USB e um sistema de localização do veículo.
+O sistema será implementado em um Raspberry, visto que este microcomputador é capaz de suprir a necesidades do projeto, dada a sua capacidade de processamento, baixo consumo de energia, conciliado às suas interfaces USB e HDMI.
 
