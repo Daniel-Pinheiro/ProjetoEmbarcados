@@ -1,9 +1,8 @@
-Em termos de hardware, qualquer modelo da placa raspberry È capaz de suprir as necessidades do
-produto. No entanto, para que possa haver interaÁ„o com usu·rio e acesso aos recursos multimÌdia,
-o veÌculo do propriet·rio dever· estar equipado com um sistema de som com entrada auxiliar ou 
-blutooth e uma tela com entrada HDMI ou vÌdeo composto. Caso haja o acrÈscimo de outra funcionalidade. 
-Para que sejam viabilizados o envio de dados e a comunicaÁ„o entre o equipamento e o servidor ou 
-propriet·rio, ser· necess·rio um mÛdulo de internet 3g ou telefonia gsm externo ao kit, alÈm do 
-proprio mÛdulo GPS tambÈm. Caso sejam incluÌdas outras funcionalidades, tambÈm ser„o necess·rios outros 
-mÛdulos ou sensores, que dever„o estar devidamente instalados no veÌculo.
-J· em termos de sofware, ser· necess·rio a adaptaÁ„o de uma distribuiÁ„o Linux especÌfica pronta, como a OpenELEC, que faz uso da inteface para multimÌdia Kodi. Para o uso do GPS e o envio de dados pela internet, ser„o utilizados processos rodando em segundo plano.
+Em termos de hardware, qualquer modelo da placa raspberry √© capaz de suprir as necessidades do
+produto. No entanto, para que possa haver intera√ß√£o com usu√°rio e acesso aos recursos multim√≠dia,
+o ve√≠culo do propriet√°rio dever√° estar equipado com um sistema de som com entrada auxiliar ou 
+blutooth e uma tela com entrada HDMI ou v√≠deo composto. Para que sejam viabilizados o envio de dados e a comunica√ß√£o entre o equipamento e o servidor ou 
+propriet√°rio, ser√° necess√°rio um m√≥dulo de internet 3g ou telefonia gsm externo ao kit, al√©m do 
+proprio m√≥dulo GPS tamb√©m. Caso sejam inclu√≠das outras funcionalidades, tamb√©m ser√£o necess√°rios outros 
+m√≥dulos ou sensores, que dever√£o estar devidamente instalados no ve√≠culo.
+J√° em termos de sofware, ser√° necess√°rio a adapta√ß√£o de uma distribui√ß√£o Linux espec√≠fica pronta, como a OpenELEC, que faz uso da inteface para multim√≠dia Kodi. Para o uso do GPS e o envio de dados pela internet, ser√£o utilizados processos rodando em segundo plano.
