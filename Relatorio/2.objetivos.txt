@@ -1,0 +1,5 @@
+O projeto consiste no desenvolvimento de uma central multimedia para automóveis. Esta central comportará uma interface visual com o usuário, 
+permitindo que este seja capaz de acessar com maior facilidade os seus recursos. O sistema terá como principal funcionalidade o uso de um 
+GPS (Sistema de Posicionamento Global) capaz de enviar informações a respeito da localização do automóvel ao seu proprietário via Internet. 
+Como funcionalidades secundárias, a central será capaz de reproduzir arquivos de áudio e vídeo a partir da conexão de um dispositivo USB. 
+O sistema está aberto a possíveis acréscimos de funcionalidades, tanto em software como hardware.
