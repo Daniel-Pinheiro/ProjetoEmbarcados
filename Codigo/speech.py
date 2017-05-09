@@ -8,4 +8,9 @@ while True:
         print('Diga algo')
         
         audio = rec.listen(s)
-        print('Você disse: ' + rec.recognize_sphinx(audio) )
+        print('Voce disse: ' + rec.recognize_sphinx(audio) )
+
+        #a = input('Continuar? ')
+	#print(a)
+        #if( a == 'n' ):
+        #    break
