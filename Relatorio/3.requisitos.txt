@@ -1,8 +1,0 @@
-Em termos de hardware, qualquer modelo da placa raspberry é capaz de suprir as necessidades do
-produto. No entanto, para que possa haver interação com usuário e acesso aos recursos multimídia,
-o veículo do proprietário deverá estar equipado com um sistema de som com entrada auxiliar ou 
-bluetooth e uma tela com entrada HDMI ou vídeo composto. Para que sejam viabilizados o envio de dados e a comunicação entre o equipamento e o servidor ou 
-proprietário, será necessário um módulo de internet 3g ou telefonia GSM externo ao kit, além do 
-proprio módulo GPS. Caso sejam incluídas outras funcionalidades, também serão necessários outros 
-módulos ou sensores, que deverão estar devidamente instalados no veículo.
-Já em termos de software, será necessário a adaptação de uma distribuição Linux específica pronta, como a OpenELEC, que faz uso da interface para multimídia Kodi. Para o uso do GPS e o envio de dados pela internet, serão utilizados processos rodando em segundo plano.
