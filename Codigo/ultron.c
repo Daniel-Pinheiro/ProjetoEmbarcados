@@ -9,8 +9,8 @@
 #include <unistd.h>
 
 typedef struct {
-	char *command;
-	char *json_command;
+	char command[50];
+	char json_command[100];
 } ultron_command;
 
 
@@ -29,10 +29,10 @@ int sendCommandTCP (char *IP_Servidor, unsigned short servidorPorta, char *mensa
 
 int main(){
 
-	bool ultron_called = false;
+	bool ultron_called, command_found;
 //	char call_ultron[] = "pocketsphinx_continuous -adcdev plughw:1,0 -lm </path/to/1234.lm> -dict </path/to/1234.dic> -inmic yes";
 	char call_ultron[] = "python3 ultron.py";
-	char buffer[100];
+	char buffer[500];
 	char *command;
 
 	ultron_command *all_commands;
@@ -43,6 +43,7 @@ int main(){
 	while(true){
 			
 		ultron_called = false;
+		command_found = false;
 
 		fp = popen(call_ultron, "r");
 		if (fp==NULL){
@@ -53,7 +54,7 @@ int main(){
 		//Verifica se o sistema foi chamado
 		while (fscanf(fp, "%s", buffer)!=EOF){
 			StrUp(buffer);
-			if(!(strcmp(buffer, "NUMBER"))){
+			if(!(strcmp(buffer, "ULTRON"))){
 				system("aplay -D plughw:0,0 hello.wav");
 				ultron_called = true;
 				break;
@@ -63,28 +64,35 @@ int main(){
 		
 		//Caso o sistema tenha sido chamado, verifica o comando
 		if(ultron_called){
-
+		
 			fp = popen(call_ultron, "r");
 			if (fp==NULL){
 				perror("Error!");
 				exit(1);
 			} 
-
+		
 			while(fscanf(fp, "%s", buffer)!=EOF){
-
+		
 				StrUp(buffer);
-				command = WhatCommand(buffer, all_commands);
-				
-				if(!(strcmp(command, "SHUTDOWN"))){
+				if(!(strcmp(buffer, "SHUTDOWN"))){
 					exit(0);
 				}
-				else if(strcmp(command, "NOT FOUND")){
+		
+				command = WhatCommand(buffer, all_commands);
+	 		
+				if(strcmp(command, "NOT FOUND")){
+					command_found = true;
 					break;
 				}
 			}
 			pclose(fp);
 	 		
-			sendCommandTCP ("127.0.0.1", 9090, command);
+			if(command_found){
+				sendCommandTCP ("127.0.0.1", 9090, command);
+			}
+			else{
+				system("aplay -D plughw:0,0 no_command.wav");
+			}
 		}
 	}
 
@@ -94,39 +102,38 @@ int main(){
 }
 
 
-
 ultron_command * InitCommands(){
 	
-	ultron_command *aux = malloc(15*sizeof(ultron_command *));
+	ultron_command *aux = calloc(15, sizeof(ultron_command *));
 
-	aux[0].command = "HOME"; 
-	aux[0].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Home\"}";
-	aux[1].command = "UP";
-	aux[1].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Up\"}";
-	aux[2].command = "DOWN"; 
-	aux[2].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Down\"}";
-	aux[3].command = "LEFT" ;
-	aux[3].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Left\"}";
-	aux[4].command = "RIGHT"; 
-	aux[4].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Right\"}";
-	aux[5].command = "SELECT";
-	aux[5].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Select\"}";
-	aux[6].command = "BACK"; 
-	aux[6].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Back\"}";
-	aux[7].command = "PLAY";
-	aux[7].json_command = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": 1 }, \"id\": 1}";
-	aux[8].command = "PAUSE"; 
-	aux[8].json_command = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": 1 }, \"id\": 1}";
-	aux[9].command = "STOP"; 
-	aux[9].json_command = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\": 1 }, \"id\": 1}";
-	aux[10].command = "NEXT";
-	aux[10].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Player.GoTo\",\"id\":1,\"params\":{\"playerid\":1,\"to\":\"next\"}}";
-	aux[11].command = "PREVIOUS";
-	aux[11].json_command = "{\"jsonrpc\":\"2.0\",\"method\":\"Player.GoTo\",\"id\":1,\"params\":{\"playerid\":1,\"to\":\"previous\"}}";
-	aux[12].command = "INCREMENT";
-	aux[12].json_command = "{ \"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": \"increment\" }, \"id\": 1 }";
-	aux[13].command = "DECREMENT";
-	aux[13].json_command = "{ \"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": \"decrement\" }, \"id\": 1 }";
+	strcpy(aux[0].command, "HOME"); 
+	strcpy(aux[0].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Home\"}");
+	strcpy(aux[1].command, "UP");
+	strcpy(aux[1].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Up\"}");
+	strcpy(aux[2].command, "DOWN"); 
+	strcpy(aux[2].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Down\"}");
+	strcpy(aux[3].command, "LEFT");
+	strcpy(aux[3].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Left\"}");
+	strcpy(aux[4].command, "RIGHT"); 
+	strcpy(aux[4].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Right\"}");
+	strcpy(aux[5].command, "SELECT");
+	strcpy(aux[5].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Select\"}");
+	strcpy(aux[6].command, "BACK"); 
+	strcpy(aux[6].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Back\"}");
+	strcpy(aux[7].command, "PLAY");
+	strcpy(aux[7].json_command, "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": 1 }, \"id\": 1}");
+	strcpy(aux[8].command, "PAUSE"); 
+	strcpy(aux[8].json_command, "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": 1 }, \"id\": 1}");
+	strcpy(aux[9].command, "STOP"); 
+	strcpy(aux[9].json_command, "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\": 1 }, \"id\": 1}");
+	strcpy(aux[10].command, "NEXT");
+	strcpy(aux[10].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Player.GoTo\",\"id\":1,\"params\":{\"playerid\":1,\"to\":\"next\"}}");
+	strcpy(aux[11].command, "PREVIOUS");
+	strcpy(aux[11].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Player.GoTo\",\"id\":1,\"params\":{\"playerid\":1,\"to\":\"previous\"}}");
+	strcpy(aux[12].command, "INCREMENT");
+	strcpy(aux[12].json_command, "{ \"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": \"increment\" }, \"id\": 1 }");
+	strcpy(aux[13].command, "DECREMENT");
+	strcpy(aux[13].json_command, "{ \"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": \"decrement\" }, \"id\": 1 }");
 
 	return aux;
 }
@@ -148,13 +155,13 @@ char *WhatCommand(char *voice_recognition, ultron_command *all_commands){
 	StrUp(voice_recognition);
 	for(i=0; i < 15; i++){
 		if(strcmp(voice_recognition, all_commands[i].command)){
-			aux = malloc(sizeof(char)*strlen(all_commands[i].json_command));
+			aux = calloc(strlen(all_commands[i].json_command), sizeof(char));
 			strcpy(aux, all_commands[i].json_command);			
 			return aux;
 		}
 	}
 
-	aux = malloc(sizeof(char)*10);
+	aux = calloc(10, sizeof(char));
 	strcpy(aux, "NOT FOUND");			
 	return aux;
 }
