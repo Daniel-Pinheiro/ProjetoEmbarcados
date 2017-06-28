@@ -37,8 +37,7 @@ int main(){
 
 	all_commands = InitCommands();
 
-	while(true){
-printf("\n\nINICIO DO WHILE\n\n");			
+	while(true){		
 		ultron_called = false;
 		command_found = false;
 
