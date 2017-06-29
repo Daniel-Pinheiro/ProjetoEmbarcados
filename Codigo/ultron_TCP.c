@@ -23,21 +23,25 @@ void StrUp(char *str);
 //Determina qual comando será enviado para o Kodi
 char *WhatCommand(char *voice_recognition, ultron_command *all_commands);
 
+//Realiza o controle externo (TCP) pela rede no Kodi
+int sendCommandTCP (char *IP_Servidor, unsigned short servidorPorta, char *mensagem );
+
 
 int main(){
 
 	bool ultron_called, command_found;
-	//char call_ultron[] = "pocketsphinx_continuous -adcdev plughw:1,0 -lm </path/to/1234.lm> -dict </path/to/1234.dic> -inmic yes";
+//	char call_ultron[] = "pocketsphinx_continuous -adcdev plughw:1,0 -lm </path/to/1234.lm> -dict </path/to/1234.dic> -inmic yes";
 	char call_ultron[] = "python3 ultron.py";
 	char buffer[500];
-	char *command, *curl_command;
+	char *command;
 
 	ultron_command *all_commands;
 	FILE *fp;
 
 	all_commands = InitCommands();
 
-	while(true){		
+	while(true){
+			
 		ultron_called = false;
 		command_found = false;
 
@@ -50,9 +54,8 @@ int main(){
 		//Verifica se o sistema foi chamado
 		while (fscanf(fp, "%s", buffer)!=EOF){
 			StrUp(buffer);
-			
-			if(!(strcmp(buffer, "NUMBER"))){
-				system("aplay hello.wav");
+			if(!(strcmp(buffer, "ULTRON"))){
+				system("aplay -D plughw:0,0 hello.wav");
 				ultron_called = true;
 				break;
 			}			
@@ -69,6 +72,7 @@ int main(){
 			} 
 		
 			while(fscanf(fp, "%s", buffer)!=EOF){
+		
 				StrUp(buffer);
 				if(!(strcmp(buffer, "SHUTDOWN"))){
 					exit(0);
@@ -82,14 +86,12 @@ int main(){
 				}
 			}
 			pclose(fp);
-		
-			if(command_found){ 		
-			sprintf(curl_command, "curl -X POST -H \"Content-Type: application/json\" -d '%s' http://localhost:8080/jsonrpc", command);
-			system(curl_command);
-
+	 		
+			if(command_found){
+				sendCommandTCP ("127.0.0.1", 9090, command);
 			}
 			else{
-				system("aplay no_command.wav");
+				system("aplay -D plughw:0,0 no_command.wav");
 			}
 		}
 	}
@@ -102,7 +104,7 @@ int main(){
 
 ultron_command * InitCommands(){
 	
-	ultron_command *aux = calloc(16, sizeof(ultron_command *));
+	ultron_command *aux = calloc(15, sizeof(ultron_command *));
 
 	strcpy(aux[0].command, "HOME"); 
 	strcpy(aux[0].json_command, "{\"jsonrpc\":\"2.0\",\"method\":\"Input.Home\"}");
@@ -132,10 +134,6 @@ ultron_command * InitCommands(){
 	strcpy(aux[12].json_command, "{ \"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": \"increment\" }, \"id\": 1 }");
 	strcpy(aux[13].command, "DECREMENT");
 	strcpy(aux[13].json_command, "{ \"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": \"decrement\" }, \"id\": 1 }");
-	strcpy(aux[14].command, "MUTE");
-	strcpy(aux[14].json_command, "{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": {\"volume\":0}, \"id\": 1}");
-	strcpy(aux[15].command, "NUMBER");
-	strcpy(aux[15].json_command, "{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": {\"volume\":100}, \"id\": 1}");
 
 	return aux;
 }
@@ -155,8 +153,8 @@ char *WhatCommand(char *voice_recognition, ultron_command *all_commands){
 	int i;
 	
 	StrUp(voice_recognition);
-	for(i=0; i < 16; i++){
-		if(!(strcmp(voice_recognition, all_commands[i].command))){
+	for(i=0; i < 15; i++){
+		if(strcmp(voice_recognition, all_commands[i].command)){
 			aux = calloc(strlen(all_commands[i].json_command), sizeof(char));
 			strcpy(aux, all_commands[i].json_command);			
 			return aux;
@@ -166,4 +164,43 @@ char *WhatCommand(char *voice_recognition, ultron_command *all_commands){
 	aux = calloc(10, sizeof(char));
 	strcpy(aux, "NOT FOUND");			
 	return aux;
+}
+
+
+int sendCommandTCP (char *IP_Servidor, unsigned short servidorPorta, char *mensagem ){
+	int socket_id;
+	struct sockaddr_in servidorAddr;
+	int length;
+
+	fprintf(stderr, "Abrindo o socket para o cliente... ");
+	socket_id = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+	if(socket_id < 0){
+		fprintf(stderr, "Erro na criacao do socket!\n");
+		exit(0);
+	}
+	fprintf(stderr, "Feito!\n");
+	
+	fprintf(stderr, "Conectando o socket ao IP %s pela porta %d... ", IP_Servidor, servidorPorta);
+	memset(&servidorAddr, 0, sizeof(servidorAddr)); // Zerando a estrutura de dados
+	servidorAddr.sin_family = AF_INET;
+	servidorAddr.sin_addr.s_addr = inet_addr(IP_Servidor);
+	servidorAddr.sin_port = htons(servidorPorta);
+
+	if(connect(socket_id, (struct sockaddr *) &servidorAddr, sizeof(servidorAddr)) < 0){
+		fprintf(stderr, "Erro na conexao!\n");
+		exit(0);
+	}
+	fprintf(stderr, "Feito!\n");
+
+	fprintf(stderr, "Mandando mensagem ao servidor... ");
+	length = strlen(mensagem) + 1;
+	write(socket_id, &length, sizeof(length));
+	write(socket_id, mensagem, length);
+	fprintf(stderr, "Feito!\n");
+
+	fprintf(stderr, "Fechando o socket local... ");
+	close(socket_id);
+	fprintf(stderr, "Feito!\n");
+	return 0;
 }
