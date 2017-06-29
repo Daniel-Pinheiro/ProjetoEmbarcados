@@ -1,0 +1,6 @@
+pocketsphinx_continuous -inmic yes \
+        -lm "langmodel.lm"  \
+        -dict "dictionary.dic" \
+        -hmm "/usr/share/pocketsphinx/model/en-us"
+        Copie a pasta model para 
+/usr/share/pocketsphinx/

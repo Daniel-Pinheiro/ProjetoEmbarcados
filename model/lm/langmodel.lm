@@ -1,0 +1,109 @@
+Language model created by QuickLM on Thu Jun 29 17:54:46 EDT 2017
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 21 sentences and 23 words
+
+\data\
+ngram 1=23
+ngram 2=42
+ngram 3=21
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-2.1004 BACK -0.2218
+-2.1004 BEFORE -0.2218
+-2.1004 DECREMENT -0.2218
+-2.1004 DOWN -0.2218
+-2.1004 HOME -0.2218
+-2.1004 INCREMENT -0.2218
+-2.1004 LEFT -0.2218
+-2.1004 MAX -0.2218
+-2.1004 MAXIMUM -0.2218
+-2.1004 MUTE -0.2218
+-2.1004 NEXT -0.2218
+-2.1004 PAUSE -0.2218
+-2.1004 PLAY -0.2218
+-2.1004 PREVIOUS -0.2218
+-2.1004 RIGHT -0.2218
+-2.1004 SELECT -0.2218
+-2.1004 SHUTDOWN -0.2218
+-2.1004 STOP -0.2218
+-2.1004 ULTRON -0.2218
+-2.1004 UP -0.2218
+-2.1004 VOLUME -0.2218
+
+\2-grams:
+-1.6232 <s> BACK 0.0000
+-1.6232 <s> BEFORE 0.0000
+-1.6232 <s> DECREMENT 0.0000
+-1.6232 <s> DOWN 0.0000
+-1.6232 <s> HOME 0.0000
+-1.6232 <s> INCREMENT 0.0000
+-1.6232 <s> LEFT 0.0000
+-1.6232 <s> MAX 0.0000
+-1.6232 <s> MAXIMUM 0.0000
+-1.6232 <s> MUTE 0.0000
+-1.6232 <s> NEXT 0.0000
+-1.6232 <s> PAUSE 0.0000
+-1.6232 <s> PLAY 0.0000
+-1.6232 <s> PREVIOUS 0.0000
+-1.6232 <s> RIGHT 0.0000
+-1.6232 <s> SELECT 0.0000
+-1.6232 <s> SHUTDOWN 0.0000
+-1.6232 <s> STOP 0.0000
+-1.6232 <s> ULTRON 0.0000
+-1.6232 <s> UP 0.0000
+-1.6232 <s> VOLUME 0.0000
+-0.3010 BACK </s> -0.3010
+-0.3010 BEFORE </s> -0.3010
+-0.3010 DECREMENT </s> -0.3010
+-0.3010 DOWN </s> -0.3010
+-0.3010 HOME </s> -0.3010
+-0.3010 INCREMENT </s> -0.3010
+-0.3010 LEFT </s> -0.3010
+-0.3010 MAX </s> -0.3010
+-0.3010 MAXIMUM </s> -0.3010
+-0.3010 MUTE </s> -0.3010
+-0.3010 NEXT </s> -0.3010
+-0.3010 PAUSE </s> -0.3010
+-0.3010 PLAY </s> -0.3010
+-0.3010 PREVIOUS </s> -0.3010
+-0.3010 RIGHT </s> -0.3010
+-0.3010 SELECT </s> -0.3010
+-0.3010 SHUTDOWN </s> -0.3010
+-0.3010 STOP </s> -0.3010
+-0.3010 ULTRON </s> -0.3010
+-0.3010 UP </s> -0.3010
+-0.3010 VOLUME </s> -0.3010
+
+\3-grams:
+-0.3010 <s> BACK </s>
+-0.3010 <s> BEFORE </s>
+-0.3010 <s> DECREMENT </s>
+-0.3010 <s> DOWN </s>
+-0.3010 <s> HOME </s>
+-0.3010 <s> INCREMENT </s>
+-0.3010 <s> LEFT </s>
+-0.3010 <s> MAX </s>
+-0.3010 <s> MAXIMUM </s>
+-0.3010 <s> MUTE </s>
+-0.3010 <s> NEXT </s>
+-0.3010 <s> PAUSE </s>
+-0.3010 <s> PLAY </s>
+-0.3010 <s> PREVIOUS </s>
+-0.3010 <s> RIGHT </s>
+-0.3010 <s> SELECT </s>
+-0.3010 <s> SHUTDOWN </s>
+-0.3010 <s> STOP </s>
+-0.3010 <s> ULTRON </s>
+-0.3010 <s> UP </s>
+-0.3010 <s> VOLUME </s>
+
+\end\
