@@ -51,7 +51,7 @@ int main(){
 		while (fscanf(fp, "%s", buffer)!=EOF){
 			StrUp(buffer);
 			
-			if(!(strcmp(buffer, "NUMBER"))){
+			if(!(strcmp(buffer, "ULTRON"))){
 				system("aplay hello.wav");
 				ultron_called = true;
 				break;
@@ -84,9 +84,8 @@ int main(){
 			pclose(fp);
 		
 			if(command_found){ 		
-			sprintf(curl_command, "curl -X POST -H \"Content-Type: application/json\" -d '%s' http://localhost:8080/jsonrpc", command);
-			system(curl_command);
-
+				sprintf(curl_command, "curl -X POST -H \"Content-Type: application/json\" -d '%s' http://localhost:8080/jsonrpc", command);
+				system(curl_command);
 			}
 			else{
 				system("aplay no_command.wav");
@@ -134,7 +133,7 @@ ultron_command * InitCommands(){
 	strcpy(aux[13].json_command, "{ \"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": \"decrement\" }, \"id\": 1 }");
 	strcpy(aux[14].command, "MUTE");
 	strcpy(aux[14].json_command, "{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": {\"volume\":0}, \"id\": 1}");
-	strcpy(aux[15].command, "NUMBER");
+	strcpy(aux[15].command, "MAXIMUM");
 	strcpy(aux[15].json_command, "{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": {\"volume\":100}, \"id\": 1}");
 
 	return aux;
