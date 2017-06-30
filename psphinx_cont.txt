@@ -1,0 +1,6 @@
+pocketsphinx_continuous -inmic yes \
+        -lm "$HOME/ultron/model/langmodel.lm"  \
+        -dict "$HOME/ultron/model/dictionary.dic" \
+        -hmm "$HOME/ultron/model/en-us"
+        
+Copie a pasta model para ~/ultron
